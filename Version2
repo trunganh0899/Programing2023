@@ -1,0 +1,236 @@
+using System;
+
+class Program
+{
+    static string username = "";
+    static bool isLoggedIn = false;
+    static int score1 = 0;
+    static int score2 = 0;
+    static int score3 = 0;
+    static int score4 = 0;
+    static int score5 = 0;
+    static int highestScore = 0;
+
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            Console.WriteLine("--------- MENU ---------");
+            Console.WriteLine("1. Đăng nhập");
+            Console.WriteLine("2. Đăng xuất");
+            Console.WriteLine("3. Nhập điểm");
+            Console.WriteLine("4. Xuất điểm");
+            Console.WriteLine("5. Tìm điểm cao nhất");
+            Console.WriteLine("6. Tính điểm trung bình");
+            Console.WriteLine("7. Xếp hạng");
+            Console.WriteLine("8. Thoát");
+            Console.WriteLine("------------------------");
+
+            Console.Write("Chọn một lựa chọn: ");
+            int choice = int.Parse(Console.ReadLine());
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case 1:
+                    Login();
+                    break;
+                case 2:
+                    Logout();
+                    break;
+                case 3:
+                    InputScores();
+                    break;
+                case 4:
+                    OutputScores();
+                    break;
+                case 5:
+                    FindHighestScore();
+                    break;
+                case 6:
+                    CalculateAverageScore();
+                    break;
+                case 7:
+                    RankStudents();
+                    break;
+                case 8:
+                    Console.WriteLine("Tạm biệt!");
+                    return;
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
+                    break;
+            }
+
+            Console.WriteLine();
+        }
+    }
+
+    static void Login()
+    {
+        if (isLoggedIn)
+        {
+            Console.WriteLine("Bạn đã đăng nhập rồi.");
+        }
+        else
+        {
+            Console.Write("Tên người dùng: ");
+            string inputUsername = Console.ReadLine();
+            Console.Write("Mật khẩu: ");
+            string inputPassword = Console.ReadLine();
+
+            if (ValidateLogin(inputUsername, inputPassword))
+            {
+                username = inputUsername;
+                isLoggedIn = true;
+                Console.WriteLine("Đăng nhập thành công.");
+            }
+            else
+            {
+                Console.WriteLine("Tên người dùng hoặc mật khẩu không đúng.");
+            }
+        }
+    }
+
+    static bool ValidateLogin(string inputUsername, string inputPassword)
+    {
+        // Kiểm tra tên người dùng và mật khẩu tại đây
+        if (inputUsername == "admin" && inputPassword == "12345")
+        {
+            return true;
+        }
+        return false;
+    }
+
+    static void Logout()
+    {
+        if (isLoggedIn)
+        {
+            username = "";
+            isLoggedIn = false;
+            Console.WriteLine("Đăng xuất thành công.");
+        }
+        else
+        {
+            Console.WriteLine("Bạn chưa đăng nhập.");
+        }
+    }
+
+    static void InputScores()
+    {
+        if (isLoggedIn)
+        {
+            Console.Write("Nhập điểm môn học 1: ");
+            score1 = int.Parse(Console.ReadLine());
+            Console.Write("Nhập điểm môn học 2: ");
+            score2 = int.Parse(Console.ReadLine());
+            Console.Write("Nhập điểm môn học 3: ");
+            score3 = int.Parse(Console.ReadLine());
+            Console.Write("Nhập điểm môn học 4: ");
+            score4 = int.Parse(Console.ReadLine());
+            Console.Write("Nhập điểm môn học 5: ");
+            score5 = int.Parse(Console.ReadLine());
+            Console.WriteLine("Nhập điểm thành công.");
+        }
+        else
+        {
+            Console.WriteLine("Bạn chưa đăng nhập.");
+        }
+    }
+
+    static void OutputScores()
+    {
+        if (isLoggedIn)
+        {
+            Console.WriteLine("Các điểm đã nhập:");
+            Console.WriteLine($"Môn học 1: {score1}");
+            Console.WriteLine($"Môn học 2: {score2}");
+            Console.WriteLine($"Môn học 3: {score3}");
+            Console.WriteLine($"Môn học 4: {score4}");
+            Console.WriteLine($"Môn học 5: {score5}");
+        }
+        else
+        {
+            Console.WriteLine("Bạn chưa đăng nhập.");
+        }
+    }
+
+    static void FindHighestScore()
+    {
+        if (isLoggedIn)
+        {
+            highestScore = score1;
+            if (score2 > highestScore)
+            {
+                highestScore = score2;
+            }
+            if (score3 > highestScore)
+            {
+                highestScore = score3;
+            }
+            if (score4 > highestScore)
+            {
+                highestScore = score4;
+            }
+            if (score5 > highestScore)
+            {
+                highestScore = score5;
+            }
+            Console.WriteLine("Điểm cao nhất là: " + highestScore);
+        }
+        else
+        {
+            Console.WriteLine("Bạn chưa đăng nhập.");
+        }
+    }
+
+    static void CalculateAverageScore()
+    {
+        if (isLoggedIn)
+        {
+            int sum = score1 + score2 + score3 + score4 + score5;
+            double average = (double)sum / 5;
+            Console.WriteLine("Điểm trung bình: " + average);
+        }
+        else
+        {
+            Console.WriteLine("Bạn chưa đăng nhập.");
+        }
+    }
+
+    static void RankStudents()
+    {
+        if (isLoggedIn)
+        {
+            Console.WriteLine("Xếp hạng:");
+            Console.WriteLine($"Môn học 1: {GetGrade(score1)}");
+            Console.WriteLine($"Môn học 2: {GetGrade(score2)}");
+            Console.WriteLine($"Môn học 3: {GetGrade(score3)}");
+            Console.WriteLine($"Môn học 4: {GetGrade(score4)}");
+            Console.WriteLine($"Môn học 5: {GetGrade(score5)}");
+        }
+        else
+        {
+            Console.WriteLine("Bạn chưa đăng nhập.");
+        }
+    }
+
+    static string GetGrade(int score)
+    {
+        if (score >= 100)
+        {
+            return "Distinction";
+        }
+        else if (score >= 80)
+        {
+            return "Merit";
+        }
+        else if (score >= 65)
+        {
+            return "Pass";
+        }
+        else
+        {
+            return "Fail";
+        }
+    }
+}
